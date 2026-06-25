@@ -4,11 +4,9 @@ window = arcade.Window(width=1350,height=687,title="Snake game")
 window.center_window()
 
 start_color = (255,255,255,95)
-
-class GameView(arcade.View):
+class Snake:
 	def __init__(self):
-		super().__init__()
-		
+	
 		self.center_x = 675
 		self.center_y = 343
 		self.width = 30
@@ -18,12 +16,9 @@ class GameView(arcade.View):
 		self.color = arcade.color.GREEN
 		self.angle = 0
 		self.speed = 300
-		self.game_over = False
 		
-		
-	def on_draw(self):
-		self.clear()
-		
+	def draw(self):
+	
 		square = arcade.draw_rectangle_filled(
 		self.center_x,
 		self.center_y, 
@@ -33,8 +28,18 @@ class GameView(arcade.View):
 		tilt_angle = self.angle,
 		)
 		
+		
+		
+class GameView(arcade.View):
+	def __init__(self):
+		super().__init__()
+		
+		self.snake = Snake()
+		self.game_over = False
+		
+	def on_draw(self):
+		self.clear()
 		if self.game_over:
-			self.clear()
 			arcade.draw_text(
 				"GAME OVER",
 				start_x=675,
@@ -42,47 +47,47 @@ class GameView(arcade.View):
 				color=arcade.color.RED,
 				font_size=50,
 				anchor_x="center",
-				anchor_y="center"
-        )
-		
+				anchor_y="center")
+		else:
+			self.snake.draw()
 	def on_key_press(self, key, modifiers):
 		if key == arcade.key.LEFT:
-			self.angle += 90
-			self.speed_x = -self.speed
-			self.speed_y = 0
+			self.snake.angle = 90
+			self.snake.speed_x = -self.snake.speed
+			self.snake.speed_y = 0
 			
 			
 		elif key == arcade.key.RIGHT:
-			self.angle -= 90
-			self.speed_x = self.speed
-			self.speed_y = 0
+			self.snake.angle = -90
+			self.snake.speed_x = self.snake.speed
+			self.snake.speed_y = 0
 			
 		elif key == arcade.key.UP:
-			self.angle = 0
-			self.speed_x = 0
-			self.speed_y = self.speed
+			self.snake.angle = 0
+			self.snake.speed_x = 0
+			self.snake.speed_y = self.snake.speed
 
 		elif key == arcade.key.DOWN:
-			self.angle += 180
-			self.speed_x = 0
-			self.speed_y = -self.speed
+			self.snake.angle = 180
+			self.snake.speed_x = 0
+			self.snake.speed_y = -self.snake.speed
 
 	
 	def on_update(self, delta_time:float):
 		if not self.game_over:
-			self.center_x += self.speed_x*delta_time
-			self.center_y += self.speed_y*delta_time
+			self.snake.center_x += self.snake.speed_x*delta_time
+			self.snake.center_y += self.snake.speed_y*delta_time
 		
-			if self.center_x >= 1350 - self.width/2:
+			if self.snake.center_x >= 1350 - self.snake.width/2:
 				self.game_over = True
 		
-			elif self.center_x <= self.width/2:
+			elif self.snake.center_x <= self.snake.width/2:
 				self.game_over = True
 		
-			elif self.center_y >= 687 - self.height/2:
+			elif self.snake.center_y >= 687 - self.snake.height/2:
 				self.game_over = True
 		
-			elif self.center_y <= self.height/2:
+			elif self.snake.center_y <= self.snake.height/2:
 				self.game_over = True
 		
 	
