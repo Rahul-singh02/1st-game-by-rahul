@@ -102,7 +102,7 @@ class GameView(arcade.View):
             
             dis = arcade.get_distance(self.food.app_x, self.food.app_y, self.snake.center_x, self.snake.center_y)
             if dis <= 25:
-                self.game_over = True
+                self.food = Food()
     
 game = GameView()
 window.show_view(game)
