@@ -14,7 +14,7 @@ class Snake:
         self.width = 30
         self.height = 30
         self.speed_x = 0
-        self.speed_y = 0
+        self.speed_y = 300
         self.color = arcade.color.GREEN
         self.angle = 0
         self.speed = 300
@@ -61,26 +61,24 @@ class GameView(arcade.View):
         else:
             self.snake.draw()
     def on_key_press(self, key, modifiers):
-        if key == arcade.key.LEFT:
-            self.snake.angle = 90
-            self.snake.speed_x = -self.snake.speed
-            self.snake.speed_y = 0
-            
-            
-        elif key == arcade.key.RIGHT:
-            self.snake.angle = -90
-            self.snake.speed_x = self.snake.speed
-            self.snake.speed_y = 0
-            
-        elif key == arcade.key.UP:
-            self.snake.angle = 0
-            self.snake.speed_x = 0
-            self.snake.speed_y = self.snake.speed
-
-        elif key == arcade.key.DOWN:
-            self.snake.angle = 180
-            self.snake.speed_x = 0
-            self.snake.speed_y = -self.snake.speed
+        if self.snake.speed_x == -self.snake.speed or self.snake.speed_x == self.snake.speed:
+            if key == arcade.key.UP:
+                self.snake.angle = 90
+                self.snake.speed_x = 0
+                self.snake.speed_y = self.snake.speed
+            elif key == arcade.key.DOWN:
+                self.snake.angle = -90
+                self.snake.speed_x = 0
+                self.snake.speed_y = -self.snake.speed
+        elif self.snake.speed_y == self.snake.speed or self.snake.speed_y == -self.snake.speed:
+            if key == arcade.key.LEFT:
+                self.snake.angle = 180
+                self.snake.speed_x = -self.snake.speed
+                self.snake.speed_y = 0
+            elif key == arcade.key.RIGHT:
+                self.snake.angle = 0
+                self.snake.speed_x = self.snake.speed
+                self.snake.speed_y = 0
 
     
     def on_update(self, delta_time:float):
