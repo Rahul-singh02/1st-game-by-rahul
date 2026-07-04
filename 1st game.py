@@ -62,20 +62,20 @@ class GameView(arcade.View):
             self.snake.draw()
     def on_key_press(self, key, modifiers):
         if self.snake.speed_x == -self.snake.speed or self.snake.speed_x == self.snake.speed:
-            if key == arcade.key.UP:
+            if key == arcade.key.W:
                 self.snake.angle = 90
                 self.snake.speed_x = 0
                 self.snake.speed_y = self.snake.speed
-            elif key == arcade.key.DOWN:
+            elif key == arcade.key.S:
                 self.snake.angle = -90
                 self.snake.speed_x = 0
                 self.snake.speed_y = -self.snake.speed
         elif self.snake.speed_y == self.snake.speed or self.snake.speed_y == -self.snake.speed:
-            if key == arcade.key.LEFT:
+            if key == arcade.key.A:
                 self.snake.angle = 180
                 self.snake.speed_x = -self.snake.speed
                 self.snake.speed_y = 0
-            elif key == arcade.key.RIGHT:
+            elif key == arcade.key.D:
                 self.snake.angle = 0
                 self.snake.speed_x = self.snake.speed
                 self.snake.speed_y = 0
