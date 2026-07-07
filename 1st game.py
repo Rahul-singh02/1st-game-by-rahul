@@ -1,6 +1,5 @@
 import arcade
 import random
-import time
 
 window = arcade.Window(width=1350,height=687,title="Snake game")
 window.center_window()
@@ -44,7 +43,10 @@ class GameView(arcade.View):
         self.snake = Snake()
         self.food = Food()
         self.game_over = False
-    
+        self.move_timer = 0
+        self.move_interval = 0.15
+        
+        
     def on_draw(self):
         self.clear()
         self.food.draw()
@@ -83,9 +85,17 @@ class GameView(arcade.View):
     
     def on_update(self, delta_time:float):
         if not self.game_over:
+        
+            self.move_timer += delta_time
+            if self.move_timer < self.move_interval:
+                return
+            self.move_timer = 0
+            
+            
             currnt_head = self.snake.body[0]
-            new_head_x = currnt_head[0] + self.snake.speed_x*delta_time
-            new_head_y = currnt_head[1] + self.snake.speed_y*delta_time
+            step = self.snake.width
+            new_head_x = currnt_head[0] + (self.snake.speed_x/self.snake.speed)*step
+            new_head_y = currnt_head[1] + (self.snake.speed_y/self.snake.speed)*step
             
             self.snake.body.insert(0, [new_head_x, new_head_y])
             
