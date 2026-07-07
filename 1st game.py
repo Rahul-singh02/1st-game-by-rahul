@@ -30,8 +30,8 @@ class Snake:
             )
 class Food:
     def __init__(self):
-        self.app_x = random.random() * 1350
-        self.app_y = random.random() * 687
+        self.app_x = (random.randint(1,44) * 30)+15
+        self.app_y = (random.randint(1,22) * 30)+15
     def draw(self):
         apple = arcade.draw_circle_filled(center_x = self.app_x, center_y = self.app_y, radius = 15, color = arcade.color.RED)
         
@@ -45,8 +45,7 @@ class GameView(arcade.View):
         self.game_over = False
         self.move_timer = 0
         self.move_interval = 0.15
-        
-        
+    
     def on_draw(self):
         self.clear()
         self.food.draw()
@@ -97,12 +96,22 @@ class GameView(arcade.View):
             new_head_x = currnt_head[0] + (self.snake.speed_x/self.snake.speed)*step
             new_head_y = currnt_head[1] + (self.snake.speed_y/self.snake.speed)*step
             
-            self.snake.body.insert(0, [new_head_x, new_head_y])
             
             if new_head_x >= 1350 - self.snake.width/2 or new_head_x <= self.snake.width/2:
                 self.game_over = True
+                return
             elif new_head_y >= 687 - self.snake.height/2 or new_head_y <= self.snake.height/2:
                 self.game_over = True
+                return
+                
+            new_head = [new_head_x, new_head_y]
+            
+            if new_head in self.snake.body:
+                self.game_over = True
+                return
+                
+                
+            self.snake.body.insert(0, new_head)
                 
                 
             dis = arcade.get_distance(self.food.app_x, self.food.app_y, new_head_x, new_head_y)
