@@ -1,6 +1,6 @@
 import arcade
 import random
-
+import time
 
 window = arcade.Window(width=1350,height=687,title="Snake game")
 window.center_window()
