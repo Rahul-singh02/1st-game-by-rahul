@@ -32,9 +32,10 @@ class Food:
     def __init__(self):
         self.app_x = (random.randint(1,44) * 30)+15
         self.app_y = (random.randint(1,22) * 30)+15
+        app_png = r"D:\Coodes\Apple.png"
+        self.Apple = arcade.Sprite(app_png, scale=1, center_x=self.app_x, center_y=self.app_y)
     def draw(self):
-        apple = arcade.draw_circle_filled(center_x = self.app_x, center_y = self.app_y, radius = 15, color = arcade.color.RED)
-        
+        self.Apple.draw()
         
         
 class GameView(arcade.View):
@@ -46,6 +47,9 @@ class GameView(arcade.View):
         self.move_timer = 0
         self.move_interval = 0.15
         self.pop = arcade.load_sound(r"D:\Coodes\pop.mp3")
+        
+        
+        
     def on_draw(self):
         self.clear()
         self.food.draw()
