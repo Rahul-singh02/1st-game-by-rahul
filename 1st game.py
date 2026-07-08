@@ -45,7 +45,7 @@ class GameView(arcade.View):
         self.game_over = False
         self.move_timer = 0
         self.move_interval = 0.15
-    
+        self.pop = arcade.load_sound(r"D:\Coodes\pop.mp3")
     def on_draw(self):
         self.clear()
         self.food.draw()
@@ -117,6 +117,7 @@ class GameView(arcade.View):
             dis = arcade.get_distance(self.food.app_x, self.food.app_y, new_head_x, new_head_y)
             if dis <= 25:
                 self.food = Food()
+                arcade.play_sound(self.pop)
             else :
                 if len(self.snake.body) > 1:
                     self.snake.body.pop()
