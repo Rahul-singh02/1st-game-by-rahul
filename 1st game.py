@@ -1,15 +1,17 @@
 import arcade
 import random
 
-window = arcade.Window(width=1350,height=687,title="Snake game")
+screen_width, screen_height = arcade.get_display_size()
+game_width, game_height = screen_width-30, screen_height-50
+window = arcade.Window(width=game_width,height=game_height,title="Snake game")
 window.center_window()
 
 start_color = (255,255,255,95)
 class Snake:
     def __init__(self):
         self.body = [[523,124]]
-        self.center_x = 675
-        self.center_y = 343
+        self.center_x = game_width/2
+        self.center_y = game_height/2
         self.width = 30
         self.height = 30
         self.speed_x = 0
@@ -57,8 +59,8 @@ class GameView(arcade.View):
             self.clear()
             arcade.draw_text(
                 "GAME OVER",
-                start_x=675,
-                start_y=343,
+                start_x=game_width/2,
+                start_y=game_height/2,
                 color=arcade.color.RED,
                 font_size=50,
                 anchor_x="center",
@@ -101,10 +103,10 @@ class GameView(arcade.View):
             new_head_y = currnt_head[1] + (self.snake.speed_y/self.snake.speed)*step
             
             
-            if new_head_x >= 1350 - self.snake.width/2 or new_head_x <= self.snake.width/2:
+            if new_head_x >= game_width - self.snake.width/2 or new_head_x <= self.snake.width/2:
                 self.game_over = True
                 return
-            elif new_head_y >= 687 - self.snake.height/2 or new_head_y <= self.snake.height/2:
+            elif new_head_y >= game_height - self.snake.height/2 or new_head_y <= self.snake.height/2:
                 self.game_over = True
                 return
                 
